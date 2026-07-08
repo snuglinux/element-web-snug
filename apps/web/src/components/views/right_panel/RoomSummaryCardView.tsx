@@ -135,6 +135,7 @@ const RoomSummaryCardView: React.FC<IProps> = ({
     const vm = useRoomSummaryCardViewModel(room, permalinkCreator, onSearchCancel);
     // XXX: this name should be part of the view model
     const name = useRoomName(room);
+    const allowChatExport = useSettingValue(UIFeature.AllowChatExport);
 
     // The search field is controlled and onSearchChange is debounced in RoomView,
     // so we need to set the value of the input right away
@@ -285,21 +286,19 @@ const RoomSummaryCardView: React.FC<IProps> = ({
 
                 {!vm.isVideoRoom && (
                     <>
-                        <MenuItem
-                            Icon={PollsIcon}
-                            label={_t("right_panel|polls_button")}
-                            onSelect={vm.onRoomPollHistoryClick}
-                        />
-                    </>
-                )}
+                    <MenuItem
+                    Icon={PollsIcon}
+                    label={_t("right_panel|polls_button")}
+                    onSelect={vm.onRoomPollHistoryClick}
+                    />
 
-                {!vm.isVideoRoom && useSettingValue(UIFeature.AllowChatExport) && (
-                    <>
+                    {allowChatExport && (
                         <MenuItem
-                            Icon={ExportArchiveIcon}
-                            label={_t("export_chat|title")}
-                            onSelect={vm.onRoomExportClick}
+                        Icon={ExportArchiveIcon}
+                        label={_t("export_chat|title")}
+                        onSelect={vm.onRoomExportClick}
                         />
+                    )}
                     </>
                 )}
 
