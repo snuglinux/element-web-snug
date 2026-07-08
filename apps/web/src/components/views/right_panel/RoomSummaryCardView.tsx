@@ -286,19 +286,19 @@ const RoomSummaryCardView: React.FC<IProps> = ({
 
                 {!vm.isVideoRoom && (
                     <>
-                    <MenuItem
-                    Icon={PollsIcon}
-                    label={_t("right_panel|polls_button")}
-                    onSelect={vm.onRoomPollHistoryClick}
-                    />
-
-                    {allowChatExport && (
                         <MenuItem
-                        Icon={ExportArchiveIcon}
-                        label={_t("export_chat|title")}
-                        onSelect={vm.onRoomExportClick}
+                            Icon={PollsIcon}
+                            label={_t("right_panel|polls_button")}
+                            onSelect={vm.onRoomPollHistoryClick}
                         />
-                    )}
+
+                        {allowChatExport && (
+                            <MenuItem
+                                Icon={ExportArchiveIcon}
+                                label={_t("export_chat|title")}
+                                onSelect={vm.onRoomExportClick}
+                            />
+                        )}
                     </>
                 )}
 
