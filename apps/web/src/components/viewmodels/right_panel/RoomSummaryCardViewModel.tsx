@@ -22,6 +22,7 @@ import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
 import { useRoomState } from "../../../hooks/useRoomState";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useDispatcher } from "../../../hooks/useDispatcher";
+import { useSettingValue } from "../../../hooks/useSettings.ts";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { canInviteTo } from "../../../utils/room/canInviteTo";
@@ -41,6 +42,7 @@ import { usePinnedEvents } from "../../../hooks/usePinnedEvents";
 import { tagRoom } from "../../../utils/room/tagRoom";
 import { inviteToRoom } from "../../../utils/room/inviteToRoom";
 import { getTagsForRoom } from "../../../utils/room/getTagsForRoom";
+import { UIFeature } from "../../../settings/UIFeature.ts";
 
 export interface RoomSummaryCardState {
     isDirectMessage: boolean;
@@ -181,6 +183,8 @@ export function useRoomSummaryCardViewModel(
     const roomTags = useEventEmitterState(room, RoomEvent.Tags, () => getTagsForRoom(room));
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
+    const allowChatExport = useSettingValue(UIFeature.AllowChatExport);
+
     const isDirectMessage = useIsDirectMessage(room);
 
     const onRoomMembersClick = (): void => {
@@ -268,6 +272,7 @@ export function useRoomSummaryCardViewModel(
         isVideoRoom,
         alias,
         isFavorite,
+        allowChatExport,
         canInviteToState,
         searchInputRef,
         pinCount,

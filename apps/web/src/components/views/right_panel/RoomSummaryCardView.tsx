@@ -50,8 +50,6 @@ import { topicToHtml } from "../../../HtmlUtils.tsx";
 import { useRoomSummaryCardViewModel } from "../../viewmodels/right_panel/RoomSummaryCardViewModel.tsx";
 import { useRoomTopicViewModel } from "../../viewmodels/right_panel/RoomSummaryCardTopicViewModel.tsx";
 import { useRoomName } from "../../../hooks/useRoomName.ts";
-import { useSettingValue } from "../../../hooks/useSettings.ts";
-import { UIFeature } from "../../../settings/UIFeature.ts";
 
 interface IProps {
     room: Room;
@@ -135,7 +133,6 @@ const RoomSummaryCardView: React.FC<IProps> = ({
     const vm = useRoomSummaryCardViewModel(room, permalinkCreator, onSearchCancel);
     // XXX: this name should be part of the view model
     const name = useRoomName(room);
-    const allowChatExport = useSettingValue(UIFeature.AllowChatExport);
 
     // The search field is controlled and onSearchChange is debounced in RoomView,
     // so we need to set the value of the input right away
@@ -292,7 +289,7 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                             onSelect={vm.onRoomPollHistoryClick}
                         />
 
-                        {allowChatExport && (
+                        {vm.allowChatExport && (
                             <MenuItem
                                 Icon={ExportArchiveIcon}
                                 label={_t("export_chat|title")}
