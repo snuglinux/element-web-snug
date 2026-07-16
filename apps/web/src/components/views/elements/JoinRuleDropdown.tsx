@@ -22,7 +22,7 @@ interface IProps {
     value: JoinRule;
     label: string;
     width?: number;
-    labelInvite: string;
+    labelInvite?: string;
     labelKnock?: string;
     labelPublic?: string;
     labelRestricted?: string; // if omitted then this option will be hidden, e.g if unsupported
@@ -39,12 +39,16 @@ const JoinRuleDropdown: React.FC<IProps> = ({
     width = 448,
     onChange,
 }) => {
-    const options = [
-        <div key={JoinRule.Invite} className="mx_JoinRuleDropdown_invite">
+    const options = [] as (ReactElement & { key: string })[];
+
+    if (labelInvite) {
+        options.push(
+            <div key={JoinRule.Invite} className="mx_JoinRuleDropdown_invite">
             <LockSolidIcon />
             {labelInvite}
-        </div>,
-    ] as NonEmptyArray<ReactElement & { key: string }>;
+            </div>,
+        );
+    }
 
     if (labelPublic) {
         options.push(

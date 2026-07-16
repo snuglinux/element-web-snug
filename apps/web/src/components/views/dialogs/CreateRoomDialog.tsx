@@ -98,6 +98,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     private readonly askToJoinEnabled: boolean;
     private readonly advancedSettingsEnabled: boolean;
     private readonly allowCreatingPublicRooms: boolean;
+    private readonly allowCreatingPrivateRooms: boolean;
     private readonly supportsRestricted: boolean;
     private nameField = createRef<Field>();
     private aliasField = createRef<RoomAliasField>();
@@ -108,12 +109,15 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         this.askToJoinEnabled = SettingsStore.getValue("feature_ask_to_join");
         this.advancedSettingsEnabled = SettingsStore.getValue(UIFeature.AdvancedSettings);
         this.allowCreatingPublicRooms = SettingsStore.getValue(UIFeature.AllowCreatingPublicRooms);
+        this.allowCreatingPrivateRooms = SettingsStore.getValue(UIFeature.AllowCreatingPrivateRooms);
 
         this.supportsRestricted = !!this.props.parentSpace;
         const defaultPublic = this.allowCreatingPublicRooms && this.props.defaultPublic;
 
         let joinRule = JoinRule.Invite;
-        if (defaultPublic) {
+        if (!this.allowCreatingPrivateRooms) {
+            joinRule = JoinRule.Public;
+        } else if (defaultPublic) {
             joinRule = JoinRule.Public;
         } else if (this.supportsRestricted) {
             joinRule = JoinRule.Restricted;
@@ -461,7 +465,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         <div>
                             <JoinRuleDropdown
                                 label={_t("create_room|room_visibility_label")}
-                                labelInvite={_t("create_room|join_rule_invite")}
+                                labelInvite={this.allowCreatingPrivateRooms ? _t("create_room|join_rule_invite") : undefined}
                                 labelKnock={
                                     this.askToJoinEnabled ? _t("room_settings|security|join_rule_knock") : undefined
                                 }

@@ -1429,7 +1429,15 @@ export const SETTINGS: Settings = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
+    [UIFeature.AllowCreatingPrivateSpaces]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
     [UIFeature.AllowCreatingPublicRooms]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.AllowCreatingPrivateRooms]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

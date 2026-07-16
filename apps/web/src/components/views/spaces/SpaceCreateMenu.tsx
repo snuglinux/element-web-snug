@@ -202,9 +202,12 @@ const SpaceCreateMenu: React.FC<{
 }> = ({ onFinished }) => {
     const cli = useMatrixClientContext();
     const settingAllowPublicSpaces = useSettingValue(UIFeature.AllowCreatingPublicSpaces);
-    const [visibility, setVisibility] = useState<Visibility | null>(
-        settingAllowPublicSpaces === false ? Visibility.Private : null,
-    );
+    const settingAllowPrivateSpaces = useSettingValue(UIFeature.AllowCreatingPrivateSpaces);
+    const [visibility, setVisibility] = useState<Visibility | null>(() => {
+        if (!settingAllowPublicSpaces) return Visibility.Private;
+        if (!settingAllowPrivateSpaces) return Visibility.Public;
+        return null;
+    });
     const [busy, setBusy] = useState<boolean>(false);
 
     const [name, setName] = useState("");
@@ -295,7 +298,7 @@ const SpaceCreateMenu: React.FC<{
     } else {
         body = (
             <React.Fragment>
-                {settingAllowPublicSpaces && (
+                {settingAllowPublicSpaces && settingAllowPrivateSpaces && (
                     <AccessibleButton
                         className="mx_SpaceCreateMenu_back"
                         onClick={() => setVisibility(null)}
@@ -306,9 +309,9 @@ const SpaceCreateMenu: React.FC<{
                 )}
 
                 <h2>
-                    {visibility === Visibility.Public
+                    {visibility === Visibility.Public && settingAllowPrivateSpaces
                         ? _t("create_space|public_heading")
-                        : settingAllowPublicSpaces
+                        : settingAllowPublicSpaces && settingAllowPrivateSpaces
                           ? _t("create_space|private_heading")
                           : _t("create_space|private_only_heading")}
                 </h2>

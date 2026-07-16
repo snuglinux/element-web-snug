@@ -75,6 +75,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { UIFeature } from "../../../settings/UIFeature.ts";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
 import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
@@ -241,11 +242,18 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
 }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
+    const settingAllowPublicSpaces = useSettingValue(UIFeature.AllowCreatingPublicSpaces);
+    const settingAllowPrivateSpaces = useSettingValue(UIFeature.AllowCreatingPrivateSpaces);
+
     useEffect(() => {
         if (!isPanelCollapsed && menuDisplayed) {
             closeMenu();
         }
     }, [isPanelCollapsed]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (!settingAllowPublicSpaces && !settingAllowPrivateSpaces) {
+        return null;
+    }
 
     let contextMenu: JSX.Element | undefined;
     if (menuDisplayed) {

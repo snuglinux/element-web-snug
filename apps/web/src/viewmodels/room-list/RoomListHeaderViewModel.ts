@@ -28,6 +28,8 @@ import {
 import type { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import type { RoomListSectionsCollapseStateChangedPayload } from "../../dispatcher/payloads/RoomListSectionsCollapseStateChangedPayload";
 import SettingsStore from "../../settings/SettingsStore";
+import { useSettingValue } from "../../hooks/useSettings";
+import { UIFeature } from "../../settings/UIFeature.ts";
 import RoomListStoreV3 from "../../stores/room-list-v3/RoomListStoreV3";
 import { SortingAlgorithm } from "../../stores/room-list-v3/skip-list/sorters";
 import { SettingLevel } from "../../settings/SettingLevel";
@@ -331,7 +333,10 @@ function computeHeaderSpaceState(
     const activeSpace = spaceStore.activeSpaceRoom;
     const title = getHeaderTitle(spaceStore);
 
-    const canCreateRoom = hasCreateRoomRights(matrixClient, activeSpace);
+    const allowPublicRooms = useSettingValue(UIFeature.AllowCreatingPublicRooms);
+    const allowPrivateRooms = useSettingValue(UIFeature.AllowCreatingPrivateRooms);
+
+    const canCreateRoom = hasCreateRoomRights(matrixClient, activeSpace) && (allowPublicRooms || allowPrivateRooms);
     const canCreateVideoRoom = getCanCreateVideoRoom(canCreateRoom);
     const displaySpaceMenu = Boolean(activeSpace);
     const canInviteInSpace = Boolean(

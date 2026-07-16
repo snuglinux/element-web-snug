@@ -25,7 +25,9 @@ export const enum UIFeature {
     RoomHistorySettings = "UIFeature.roomHistorySettings",
     TimelineEnableRelativeDates = "UIFeature.timelineEnableRelativeDates",
     AllowCreatingPublicRooms = "UIFeature.allowCreatingPublicRooms",
+    AllowCreatingPrivateRooms = "UIFeature.allowCreatingPrivateRooms",
     AllowCreatingPublicSpaces = "UIFeature.allowCreatingPublicSpaces",
+    AllowCreatingPrivateSpaces = "UIFeature.allowCreatingPrivateSpaces",
     AllowChatExport = "UIFeature.allowChatExport",
 }
 
