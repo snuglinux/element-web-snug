@@ -580,7 +580,9 @@ Currently, the following UI feature flags are supported:
   timeline for recent messages. When false day dates will be used.
 - `UIFeature.locationSharing` - Whether or not location sharing menus will be shown.
 - `UIFeature.allowCreatingPublicRooms` - Whether or not public rooms can be created.
+- `UIFeature.allowCreatingPrivateRooms` - Whether or not private rooms can be created.
 - `UIFeature.allowCreatingPublicSpaces` - Whether or not public spaces can be created.
+- `UIFeature.allowCreatingPrivateSpaces` - Whether or not private spaces can be created.
 - `UIFeature.allowChatExport` - Whether or not chats can be exported.
 
 ## Modules
