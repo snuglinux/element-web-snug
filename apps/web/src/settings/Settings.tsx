@@ -320,6 +320,7 @@ export interface Settings {
     }>;
     "breadcrumbs": IBaseSetting<boolean>;
     "showHiddenEventsInTimeline": IBaseSetting<boolean>;
+    "showOfflineScreen": IBaseSetting<boolean>;
     /**
      * This is the 2019-era low bandwidth that deals with disabling features of the
      * client. It does NOT make any API or spec changes.
@@ -1191,6 +1192,10 @@ export const SETTINGS: Settings = {
     "showHiddenEventsInTimeline": {
         displayName: _td("devtools|show_hidden_events"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "showOfflineScreen": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
     },
     "lowBandwidth": {

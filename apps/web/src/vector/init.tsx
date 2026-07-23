@@ -29,6 +29,7 @@ import WebPlatform from "./platform/WebPlatform";
 import { initRageshake, initRageshakeStore } from "./rageshakesetup";
 import { ModuleApi } from "../modules/Api.ts";
 import { type URLParams } from "./url_utils.ts";
+import ConnectionStatus from '../components/structures/ConnectionStatus';
 
 export const rageshakePromise = initRageshake();
 
@@ -99,7 +100,11 @@ export async function loadApp(urlParams: URLParams): Promise<void> {
     }
     const app = await module.loadApp(urlParams, setWindowMatrixChat);
     const root = createRoot(document.getElementById("matrixchat")!);
-    root.render(app);
+    root.render(
+        <ConnectionStatus>
+            {app}
+        </ConnectionStatus>
+    );
 }
 
 export async function showError(title: string, messages?: string[]): Promise<void> {
