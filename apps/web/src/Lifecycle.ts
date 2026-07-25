@@ -80,6 +80,7 @@ import { TokenRefresher } from "./utils/oidc/TokenRefresher";
 import { checkBrowserSupport } from "./SupportedBrowser";
 import { type URLParams } from "./vector/url_utils.ts";
 import { type OnLoggedInPayload } from "./dispatcher/payloads/OnLoggedInPayload.ts";
+import { installUserBlockMonitor } from "./utils/UserBlockMonitor";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -1121,6 +1122,8 @@ async function startMatrixClient(
     }
 
     checkSessionLock();
+
+    installUserBlockMonitor(client);
 
     // This needs to be started after crypto is set up
     DeviceListener.sharedInstance().start(client);

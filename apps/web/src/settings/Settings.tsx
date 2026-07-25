@@ -321,6 +321,7 @@ export interface Settings {
     "breadcrumbs": IBaseSetting<boolean>;
     "showHiddenEventsInTimeline": IBaseSetting<boolean>;
     "showOfflineScreen": IBaseSetting<boolean>;
+    "kickBlockedUser": IBaseSetting<boolean>;
     /**
      * This is the 2019-era low bandwidth that deals with disabling features of the
      * client. It does NOT make any API or spec changes.
@@ -1195,6 +1196,10 @@ export const SETTINGS: Settings = {
         default: false,
     },
     "showOfflineScreen": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: false,
+    },
+    "kickBlockedUser": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
     },
